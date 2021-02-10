@@ -11,6 +11,7 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -21,41 +22,43 @@ $products = $statement->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="app.css">
     <title>Products CRUD</title>
 </head>
+
 <body>
-<h1>Products</h1>
+    <h1>Products</h1>
 
-<p>
-    <button href="create.php" class="btn btn-success">Create Product</button>
-</p>
+    <p>
+        <button href="create.php" class="btn btn-success">Create Product</button>
+    </p>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Image</th>
-        <th scope="col">Title</th>
-        <th scope="col">Price</th>
-        <th scope="col">Create Date</th>
-        <th scope="col">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach($products as $i => $product): ?>
-        <tr>
-            <th scope="row"><?= $i + 1 ?></th>
-            <td><?=$product['image']; ?></td>
-            <td><?=$product['title']; ?></td>
-            <td><?=$product['price']; ?></td>
-            <td><?=$product['create_date']; ?></td>
-            <td>
-                <button type="button" class="btn btn-outline-primary">Edit</button>
-                <button type="button" class="btn btn-outline-danger">Delete</button>
-            </td>
-        </tr>
-    <?php endforeach ?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Create Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($products as $i => $product) : ?>
+                <tr>
+                    <th scope="row"><?= $i + 1 ?></th>
+                    <td><?= $product['image']; ?></td>
+                    <td><?= $product['title']; ?></td>
+                    <td><?= $product['price']; ?></td>
+                    <td><?= $product['create_date']; ?></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary">Edit</button>
+                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach ?>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
 </body>
+
 </html>
