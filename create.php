@@ -3,6 +3,11 @@
 $pdo = new PDO('mysql:host=localhost;port=3306;dbname=products_crud', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+echo '<pre>';
+echo $_FILES;
+echo '<pre>';
+exit;
+
 $errors = [];
 
 $title = '';
@@ -26,6 +31,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if(empty($errors)) {
+        $image = $_FILES['image'] ?? null;
+        if($image) {
+            move_uploaded_file($image['tmp_name'], 'test.jpg');
+        }
+        exit;
+
         $statement = $pdo->prepare("INSERT INTO products (title, image, description, price, create_date)
                         VALUES(:title, :image, :description, :price, :date)");
         $statement->bindValue(':title', $title);
@@ -65,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 <?php endif; ?>
 
-    <form action="create.php" method="post">
+    <form action="create.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label>Product Image</label>
             <br>
