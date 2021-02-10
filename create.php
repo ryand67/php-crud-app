@@ -5,6 +5,10 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $errors = [];
 
+$title = '';
+$price = '';
+$description = '';
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $title = $_POST['title'];
@@ -21,15 +25,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Product price is required.';
     }
 
-    $statement = $pdo->prepare("INSERT INTO products (title, image, description, price, create_date)
-                    VALUES(:title, :image, :description, :price, :date)");
-    $statement->bindValue(':title', $title);
-    $statement->bindValue(':image', '');
-    $statement->bindValue(':description', $description);
-    $statement->bindValue(':price', $price);
-    $statement->bindValue(':date', $date);
-
-    $statement->execute();
+    if(empty($errors)) {
+        $statement = $pdo->prepare("INSERT INTO products (title, image, description, price, create_date)
+                        VALUES(:title, :image, :description, :price, :date)");
+        $statement->bindValue(':title', $title);
+        $statement->bindValue(':image', '');
+        $statement->bindValue(':description', $description);
+        $statement->bindValue(':price', $price);
+        $statement->bindValue(':date', $date);
+    
+        $statement->execute();
+    }
 }
 
 ?>
@@ -67,15 +73,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="form-group">
             <label>Product Title</label>
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-control" name="title"><?=$title?></input>
         </div>
         <div class="form-group">
             <label>Product Description</label>
-            <textarea class="form-control" name="description"></textarea>
+            <textarea class="form-control" name="description"><?=$description?></textarea>
         </div>
         <div class="form-group">
             <label>Product Price</label>
-            <input type="number" step=".01" class="form-control" name="price">
+            <input type="number" step=".01" class="form-control" name="price"><?=$price?></input>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
